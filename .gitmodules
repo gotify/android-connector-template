@@ -1,0 +1,3 @@
+[submodule "app/src/main/java/com/github/gotifynotiftester/gotify"]
+	path = app/src/main/java/com/github/gotifynotiftester/gotify
+	url = https://github.com/gougeon-s/android-connector
