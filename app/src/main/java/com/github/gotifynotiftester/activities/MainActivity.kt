@@ -1,7 +1,8 @@
-package com.github.gotifynotiftester
+package com.github.gotifynotiftester.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.github.gotifynotiftester.R
 
 class MainActivity : AppCompatActivity() {
 
