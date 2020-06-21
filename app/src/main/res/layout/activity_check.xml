@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.CheckActivity">
+
+    <TextView
+        android:id="@+id/text_can_bind"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="GotifyService:"
+        app:layout_constraintEnd_toEndOf="@+id/text_register"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_register"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="App is register: "
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_can_bind" />
+
+    <TextView
+        android:id="@+id/text_token"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Token: "
+        app:layout_constraintEnd_toEndOf="@+id/text_register"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_register" />
+
+    <TextView
+        android:id="@+id/text_url"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Url: "
+        app:layout_constraintEnd_toEndOf="@+id/text_token"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_token" />
+
+    <Button
+        android:id="@+id/button_unregister"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:onClick="unregister"
+        android:text="Unregister"
+        app:layout_constraintEnd_toStartOf="@+id/button_notify"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_url" />
+
+    <Button
+        android:id="@+id/button_notify"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:onClick="sendNotification"
+        android:text="Notify"
+        android:visibility="visible"
+        app:layout_constraintBaseline_toBaselineOf="@+id/button_unregister"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_unregister" />
+
+    <TextView
+        android:id="@+id/text_result_can_bind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="not connected"
+        app:layout_constraintBaseline_toBaselineOf="@+id/text_can_bind"
+        app:layout_constraintStart_toEndOf="@+id/text_can_bind" />
+
+    <TextView
+        android:id="@+id/text_result_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="false"
+        app:layout_constraintBaseline_toBaselineOf="@+id/text_register"
+        app:layout_constraintStart_toEndOf="@+id/text_register" />
+
+    <TextView
+        android:id="@+id/text_token_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="none"
+        app:layout_constraintBaseline_toBaselineOf="@+id/text_token"
+        app:layout_constraintStart_toEndOf="@+id/text_token" />
+
+    <TextView
+        android:id="@+id/text_url_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="none"
+        app:layout_constraintBaseline_toBaselineOf="@+id/text_url"
+        app:layout_constraintStart_toEndOf="@+id/text_url" />
+</androidx.constraintlayout.widget.ConstraintLayout>
