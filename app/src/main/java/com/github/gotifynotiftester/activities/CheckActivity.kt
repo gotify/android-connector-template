@@ -13,7 +13,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.github.gotifynotiftester.R
-import com.github.gotifynotiftester.gotify.*
+import com.github.gotify.connector.*
 
 class CheckActivity : GotifyServiceBinding() {
 
@@ -21,10 +21,11 @@ class CheckActivity : GotifyServiceBinding() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_check)
 
-        /** First of all, we set serviceName to our custom notif
+        /** If you want to use custom notification !
+         * First of all, we set serviceName to our custom notif
          * service name to register it
          */
-        serviceName = "$packageName.services.CustomNotif"
+        //serviceName = "$packageName.services.CustomNotif"
 
         val btn: Button = findViewById<View>(R.id.button_notify) as Button
         btn.isEnabled = false

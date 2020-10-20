@@ -1,6 +1,6 @@
 package com.github.gotifynotiftester.services
 
-import com.github.gotifynotiftester.gotify.GotifyServiceNotification
+import com.github.gotify.connector.GotifyServiceNotification
 
 class CustomNotif : GotifyServiceNotification(){
     /**
