@@ -34,29 +34,14 @@ class CheckActivity : GotifyServiceBinding() {
         doBindService()
     }
 
-    //we overwrite the handler to add functions based on the purpose of the msg
-    internal inner class subHandler : gHandler() {
-        override fun handleMessage(msg: Message) {
-            super.handleMessage(msg)
-            when (msg.what) {
-                TYPE_CLIENT_STARTED -> connected()
-                TYPE_REGISTERED_CLIENT -> registered()
-            }
-        }
-    }
-
-    // we override the mMessenger to use our handler
-    override val gMessenger = Messenger(subHandler())
-
-    private fun connected() {
+    override fun onConnected() {
         findViewById<TextView>(R.id.text_result_can_bind).apply {
             text = "connected"
         }
-        // is gotify connected to the server ?
         doRegisterApp()
     }
 
-    private fun registered() {
+    override fun onRegistered() {
         findViewById<TextView>(R.id.text_result_register).apply {
             text = "true"
         }
