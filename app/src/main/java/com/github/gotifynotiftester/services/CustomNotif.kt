@@ -8,8 +8,8 @@ class CustomNotif : GotifyServiceNotification(){
      * you need to override showNotification
      */
     /*
-    override fun showNotification(msg: Message){
-        super.showNotification(msg)
+    override fun onMessage(msg: Message){
+        super.onMessage(msg)
     }
     */
 }
