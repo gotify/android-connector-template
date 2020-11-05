@@ -1,9 +1,8 @@
 package com.github.gotifynotiftester.activities
 
 
+import android.content.Intent
 import android.os.Bundle
-import android.os.Message
-import android.os.Messenger
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -31,14 +30,14 @@ class CheckActivity : GotifyServiceBinding() {
         btn.isEnabled = false
 
         //bind to the service
-        doBindService()
+        bindRemoteService()
     }
 
     override fun onConnected() {
         findViewById<TextView>(R.id.text_result_can_bind).apply {
             text = "connected"
         }
-        doRegisterApp()
+        registerApp()
     }
 
     override fun onRegistered() {
@@ -55,14 +54,21 @@ class CheckActivity : GotifyServiceBinding() {
         btn.isEnabled = true
     }
 
+    override fun onUnregistered() {
+        unbindRemoteService()
+        val intent = Intent(this,
+                MainActivity::class.java)
+        startActivity(intent)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-        doUnbindService()
+        unbindRemoteService()
     }
 
     fun unregister(view: View) {
         Toast.makeText(this, "unregister", Toast.LENGTH_SHORT).show()
-        doUnregisterApp()
+        unregisterApp()
     }
 
     fun sendNotification(view: View) {
