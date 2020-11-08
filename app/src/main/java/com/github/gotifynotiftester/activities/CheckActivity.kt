@@ -24,12 +24,6 @@ class CheckActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_check)
 
-        /** If you want to use custom notification !
-         * First of all, we set serviceName to our custom notif
-         * service name to register it
-         */
-        //serviceName = "$packageName.services.CustomNotif"
-
         val btn: Button = findViewById<View>(R.id.button_notify) as Button
         btn.isEnabled = false
 
@@ -42,7 +36,13 @@ class CheckActivity : Activity() {
             findViewById<TextView>(R.id.text_result_can_bind).apply {
                 text = "connected"
             }
-            super.onConnected(service)
+            /** If you want to use custom notification !
+             * You have to register your custom service :
+             * (remember to comment the registration of
+             * defaultServiceName)
+             */
+            //service.registerApp("${applicationName}.services.CustomNotif")
+            service.registerApp(defaultServiceName)
         }
 
         override fun onRegistered(service: GotifyServiceBinding, registration: Registration) {
