@@ -5,8 +5,8 @@ import android.content.Intent
 import android.os.IBinder
 import android.os.Message
 import android.os.Messenger
+import android.widget.Toast
 import com.github.gotify.connector.GotifyServiceHandler
-import com.github.gotify.connector.getGotifyIdInSharedPref
 
 val customServiceName = "services.CustomNotif"
 
@@ -20,11 +20,11 @@ class CustomNotif : Service(){
 
     internal inner class gHandler : GotifyServiceHandler(this){
         override fun onMessage(message: Message) {
-            super.onMessage(message)
+            Toast.makeText(applicationContext, "You received a message", Toast.LENGTH_SHORT).show()
         }
     }
 
     override fun onBind(intent: Intent): IBinder? {
         return gMessenger.binder
     }
-    }
+}

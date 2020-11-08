@@ -41,7 +41,7 @@ class CheckActivity : Activity() {
              * (remember to comment the registration of
              * defaultServiceName)
              */
-            //service.registerApp("${applicationName}.services.CustomNotif")
+            //service.registerApp("${packageName}.services.CustomNotif")
             service.registerApp(defaultServiceName)
         }
 
