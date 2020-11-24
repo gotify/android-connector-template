@@ -14,6 +14,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.github.gotifynotiftester.R
 import com.github.gotify.connector.*
+import com.github.gotifynotiftester.services.customServiceName
 
 class CheckActivity : Activity() {
 
@@ -36,16 +37,14 @@ class CheckActivity : Activity() {
             findViewById<TextView>(R.id.text_result_can_bind).apply {
                 text = "connected"
             }
-            /** If you want to use custom notification !
-             * You have to register your custom service :
-             * (remember to comment the registration of
-             * defaultServiceName)
+            /**
+             * We need to register the service where gotify has to send the notifications
              */
-            //service.registerApp("${packageName}.services.CustomNotif")
-            service.registerApp(defaultServiceName)
+            service.registerApp("${packageName}${customServiceName}")
         }
 
         override fun onRegistered(service: GotifyServiceBinding, registration: Registration) {
+            registerGotifyIdInSharedPref(service.context,registration.senderUid)
             token = registration.token
             url = registration.url
             findViewById<TextView>(R.id.text_result_register).apply {
@@ -59,7 +58,6 @@ class CheckActivity : Activity() {
             }
             val btn: Button = findViewById<View>(R.id.button_notify) as Button
             btn.isEnabled = true
-            super.onRegistered(service, registration)
         }
 
         override fun onUnregistered(service: GotifyServiceBinding) {

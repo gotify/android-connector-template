@@ -1,30 +1,98 @@
 package com.github.gotifynotiftester.services
 
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.Service
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.IBinder
 import android.os.Message
 import android.os.Messenger
-import android.widget.Toast
 import com.github.gotify.connector.GotifyServiceHandler
+import com.github.gotify.connector.getGotifyIdInSharedPref
+import java.util.concurrent.ThreadLocalRandom
 
-val customServiceName = "services.CustomNotif"
+const val customServiceName = ".services.CustomNotif" // ! Starts with a dot
 
 class CustomNotif : Service(){
-    /**
-     * Here you can custom your notification
-     * you need to override showNotification
-     */
 
-    private val gMessenger = Messenger(gHandler())
+    private var notifier: Notifier? = null
 
-    internal inner class gHandler : GotifyServiceHandler(this){
+    private val notifMessenger = Messenger(MessageHandler(this))
+
+    internal class MessageHandler(var service: CustomNotif) : GotifyServiceHandler(){
         override fun onMessage(message: Message) {
-            Toast.makeText(applicationContext, "You received a message", Toast.LENGTH_SHORT).show()
+            val text = message.data?.getString("message")!!
+            var title = message.data?.getString("title")!!
+            if (title.isBlank()) {
+                title = service.applicationInfo.name
+            }
+            var priority = message.data!!.getInt("priority")
+            service.notifier?.sendNotification(title,text,priority)
+        }
+
+        override fun isTrusted(uid: Int): Boolean {
+            return uid == getGotifyIdInSharedPref(service)
         }
     }
 
     override fun onBind(intent: Intent): IBinder? {
-        return gMessenger.binder
+        return notifMessenger.binder
+    }
+
+    override fun onCreate() {
+        notifier = Notifier(this)
+        notifier?.init()
+        super.onCreate()
+    }
+}
+
+class Notifier(var context: Context){
+    /** For showing and hiding our notification.  */
+    private var gNM: NotificationManager? = null
+    private var channelId = "gotifyChannelID"
+
+    fun init() {
+        channelId = context.packageName
+        createNotificationChannel()
+        gNM = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    }
+
+    fun sendNotification(title: String,text: String, priority: Int){
+        val notificationBuilder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Notification.Builder(context, channelId)
+        } else {
+            Notification.Builder(context)
+        }
+
+        val notification =
+                notificationBuilder.setSmallIcon(context.applicationInfo.icon) // the status icon
+                        .setTicker(text) // the status text
+                        .setWhen(System.currentTimeMillis()) // the time stamp
+                        .setContentTitle(title) // the label of the entry
+                        .setContentText(text) // the contents of the entry
+                        .setPriority(priority)
+                        .build()
+
+        gNM!!.notify(ThreadLocalRandom.current().nextInt(), notification)
+    }
+
+    private fun createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && channelId.isNotEmpty()) {
+            val name = context.packageName
+            val descriptionText = "gotify"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(channelId, name, importance).apply {
+                description = descriptionText
+            }
+            // Register the channel with the system
+            val notificationManager: NotificationManager =
+                    context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
     }
 }

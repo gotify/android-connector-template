@@ -20,9 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- To use a custom notification (do not forget to comment com.github.gotify.connector.DefaultServiceNotification): -->
-        <!--<service android:name=".services.CustomNotif" android:exported="true"/>-->
-        <service android:name="com.github.gotify.connector.DefaultServiceNotification" android:exported="true" />
+        <!-- We need to expose the service to handle notifications -->
+        <service android:name=".services.CustomNotif" android:exported="true"/>
     </application>
 
 </manifest>
