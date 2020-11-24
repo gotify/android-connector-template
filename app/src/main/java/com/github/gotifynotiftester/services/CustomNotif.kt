@@ -8,8 +8,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.IBinder
-import android.os.Message
 import android.os.Messenger
+import com.github.gotify.connector.GotifyMessage
 import com.github.gotify.connector.GotifyServiceHandler
 import com.github.gotify.connector.getGotifyIdInSharedPref
 import java.util.concurrent.ThreadLocalRandom
@@ -23,14 +23,17 @@ class CustomNotif : Service(){
     private val notifMessenger = Messenger(MessageHandler(this))
 
     internal class MessageHandler(var service: CustomNotif) : GotifyServiceHandler(){
-        override fun onMessage(message: Message) {
-            val text = message.data?.getString("message")!!
-            var title = message.data?.getString("title")!!
-            if (title.isBlank()) {
+        override fun onMessage(message: GotifyMessage) {
+            val text = message.message
+            var title = message.title
+            if (title == null) {
                 title = service.applicationInfo.name
             }
-            var priority = message.data!!.getInt("priority")
-            service.notifier?.sendNotification(title,text,priority)
+            var priority = message.priority
+            if (priority == null){
+                priority = 8
+            }
+            service.notifier?.sendNotification(title!!,text!!,priority.toInt())
         }
 
         override fun isTrusted(uid: Int): Boolean {
