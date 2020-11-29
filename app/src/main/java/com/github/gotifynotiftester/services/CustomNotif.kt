@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.IBinder
+import android.os.Looper
 import android.os.Messenger
 import com.github.gotify.connector.GotifyMessage
 import com.github.gotify.connector.GotifyServiceHandler
@@ -22,7 +23,7 @@ class CustomNotif : Service(){
 
     private val notifMessenger = Messenger(MessageHandler(this))
 
-    internal class MessageHandler(var service: CustomNotif) : GotifyServiceHandler(){
+    internal class MessageHandler(var service: CustomNotif) : GotifyServiceHandler(Looper.getMainLooper()){
         override fun onMessage(message: GotifyMessage) {
             val text = message.message
             var title = message.title
