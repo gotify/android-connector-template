@@ -1,0 +1,3 @@
+include ':gotify_connector'
+rootProject.name='Gotify Connector Template'
+include ':app'
