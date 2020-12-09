@@ -1,4 +1,4 @@
-package com.github.gotifynotiftester.services
+package com.github.gotify.connector.template.services
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -15,22 +15,19 @@ import com.github.gotify.connector.GotifyServiceHandler
 import com.github.gotify.connector.getGotifyIdInSharedPref
 import java.util.concurrent.ThreadLocalRandom
 
-const val customServiceName = ".services.CustomNotif" // ! Starts with a dot
+const val customServiceName = ".services.CustomGotifyNotificationService" // ! Starts with a dot
 
-class CustomNotif : Service(){
+class CustomGotifyNotificationService : Service(){
 
     private var notifier: Notifier? = null
 
     private val notifMessenger = Messenger(MessageHandler(this))
 
-    internal class MessageHandler(var service: CustomNotif) : GotifyServiceHandler(Looper.getMainLooper()){
+    internal class MessageHandler(var service: CustomGotifyNotificationService) : GotifyServiceHandler(Looper.getMainLooper()){
         override fun onMessage(message: GotifyMessage) {
             val text = message.message
-            var title = message.title
-            if (title == null) {
-                title = service.applicationInfo.name
-            }
             var priority = message.priority
+            var title = message.title ?: service.applicationInfo.name
             if (priority == null){
                 priority = 8
             }

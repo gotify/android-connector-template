@@ -1,4 +1,4 @@
-package com.github.gotifynotiftester.activities
+package com.github.gotify.connector.template.activities
 
 
 import android.app.Activity
@@ -12,9 +12,9 @@ import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.github.gotifynotiftester.R
+import com.github.gotify.connector.template.R
 import com.github.gotify.connector.*
-import com.github.gotifynotiftester.services.customServiceName
+import com.github.gotify.connector.template.services.customServiceName
 
 class CheckActivity : Activity() {
 

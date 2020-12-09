@@ -1,10 +1,10 @@
-package com.github.gotifynotiftester.activities
+package com.github.gotify.connector.template.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.github.gotifynotiftester.R
+import com.github.gotify.connector.template.R
 
 class MainActivity : AppCompatActivity() {
 
